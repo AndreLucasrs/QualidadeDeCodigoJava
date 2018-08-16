@@ -16,3 +16,9 @@ public class ContaPF extends ContaBancaria {
 	}
 
 }
+/*
+ * Existem muitas maneiras diferentes de refatorar esse tipo de código,
+ * dependendo do nível da duplicação do código. Extrair para métodos privados,
+ * para classes, fazer uso de herança, ou composição. Padrões de projeto podem
+ * ajudar novamente. O ponto-chave novamente é evitar código duplicado.
+ */
