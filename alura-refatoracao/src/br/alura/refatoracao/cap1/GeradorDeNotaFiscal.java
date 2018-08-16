@@ -2,38 +2,40 @@ package br.alura.refatoracao.cap1;
 
 public class GeradorDeNotaFiscal {
 
+	// Sempre tente ter metodos pequenos e faceis de serem lidos
+	// tente sempre fazer um metodo no maximo do tamanho da tela
+	// deixar nomes dos metodos mais claros sobre o que ele faz
 	public NotaFiscal gera(Fatura fatura) {
 
-		// calcula valor do imposto
-		double valor = fatura.getValorMensal();
-		double imposto = 0;
-		if(valor < 200) {
-			imposto = valor * 0.03;
-		}
-		else if(valor > 200 && valor <= 1000) {
-			imposto = valor * 0.06;
-		}
-		else {
-			imposto = valor * 0.07;
-		}
-		
-		NotaFiscal nf = new NotaFiscal(valor, imposto);
-
-		// envia email
-		String msgDoEmail = "Caro cliente,<br/>";
-		msgDoEmail += "√â com prazer que lhe avisamos que sua nota fiscal foi "
-				+ "gerada no valor de " + nf.getValorLiquido() + ".<br/>";
-		msgDoEmail += "Acesse o site da prefeitura e fa√ßa o download.<br/><br/>";
-		msgDoEmail += "Obrigado!";
-		
-		System.out.println(msgDoEmail);
-		
-		// salva no banco
-		String sql = "insert into notafiscal (cliente, valor)"+
-					 "values (?," + nf.getValorLiquido() + ")";
-		
-		System.out.println("Salvando no banco" + sql);
+		NotaFiscal nf = geraNF(fatura);
+		new EnviadorDeEmail().enviaEmail(nf);
+		new NFDao().salvaNoBanco(nf);
 
 		return nf;
 	}
+
+	private NotaFiscal geraNF(Fatura fatura) {
+
+		double valor = fatura.getValorMensal();
+		double imposto = 0;
+		if (valor < 200) {
+			imposto = valor * 0.03;
+		} else if (valor > 200 && valor <= 1000) {
+			imposto = valor * 0.06;
+		} else {
+			imposto = valor * 0.07;
+		}
+
+		NotaFiscal nf = new NotaFiscal(valor, imposto);
+		return nf;
+	}
 }
+
+/*
+ * Quando devemos extrair para um mÈtodo privado e quando devemos extrair para
+ * uma outra classe? Geralmente levamos para uma outra classe todo trecho de
+ * cÛdigo que "pertence a outra responsabilidade". No nosso exemplo, o cÛdigo de
+ * acesso a banco de dados n„o tem relaÁ„o com o cÛdigo de geraÁ„o da NF; s„o
+ * coisas diferentes, e portanto cada um merece a sua classe. MÈtodos privados
+ * s„o bem ˙teis para dividir um mesmo algoritmo, grande, em trechos menores.
+ */
