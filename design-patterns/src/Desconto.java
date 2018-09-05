@@ -8,7 +8,7 @@ public interface Desconto {
 }
 
 /*
- * rçamento atende a regra de um desconto, o mesmo já calcula o desconto. Caso
+ * Orçamento atende a regra de um desconto, o mesmo já calcula o desconto. Caso
  * contrário, ele passa para o "próximo" desconto, qualquer que seja esse
  * próximo desconto.
  * 
