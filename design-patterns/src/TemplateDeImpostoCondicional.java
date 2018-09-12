@@ -2,15 +2,15 @@
 //Template Method
 //Escreve o algoritmo principal na classe pai
 //Os filhos filhos so vão escrever o que precisa
-public abstract class TemplateDeImpostoCondicional implements Imposto{
-
+public abstract class TemplateDeImpostoCondicional extends Imposto{
+	
 	@Override
 	public double calcula(Orcamento orcamento) {
 		
 		if(deveUsarMaximaTaxacao(orcamento)) {
-			return maximaTaxacao(orcamento);
+			return maximaTaxacao(orcamento) + calculoDoOutroImposto(orcamento);
 		}
-		return minimaTaxacao(orcamento);
+		return minimaTaxacao(orcamento) + + calculoDoOutroImposto(orcamento);
 	}
 
 	public abstract double maximaTaxacao(Orcamento orcamento);

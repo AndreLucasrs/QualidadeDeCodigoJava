@@ -1,6 +1,12 @@
 
-public class ICCC implements Imposto {
+public class ICCC extends Imposto {
 
+	public ICCC(Imposto outroImposto) {
+		super(outroImposto);
+	}
+	
+	public ICCC() {}
+	
 	public double calcula(Orcamento orcamento) {
 		if (orcamento.getValor() < 1000) {
 			return orcamento.getValor() * 0.05;
